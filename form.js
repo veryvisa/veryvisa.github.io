@@ -1,5 +1,22 @@
 /* 微出国服务站 · 咨询表单（FormSubmit AJAX）。无依赖；失败时露出 mailto 兜底。 */
 (function () {
+  var bar = document.querySelector('.mobile-service-bar');
+  var hero = document.querySelector('.hero');
+  var contact = document.querySelector('#contact');
+  if (bar && hero && contact) {
+    var scheduled = false;
+    function updateBar() {
+      scheduled = false;
+      var c = contact.getBoundingClientRect();
+      bar.hidden = hero.getBoundingClientRect().bottom > 0 || (c.top < innerHeight && c.bottom > 0);
+    }
+    function scheduleBar() {
+      if (!scheduled) { scheduled = true; requestAnimationFrame(updateBar); }
+    }
+    addEventListener('scroll', scheduleBar, { passive: true });
+    addEventListener('resize', scheduleBar);
+    updateBar();
+  }
   function qs(name) {
     try { return new URLSearchParams(location.search).get(name) || ''; } catch (e) { return ''; }
   }
