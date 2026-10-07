@@ -36,14 +36,14 @@
           var good = res.ok && (res.j.success === true || res.j.success === 'true');
           if (!good) throw new Error((res.j && res.j.message) || 'send failed');
           msg.className = 'form-msg ok';
-          msg.textContent = '收到了。我们会在 1–2 个工作日内用你留的邮箱回复；如果没看到，请看一下垃圾邮件箱。';
+          msg.textContent = '已收到。我们一般在 1–2 个工作日内以邮件回复；如未收到，请查看垃圾邮件箱。';
           f.reset();
           if (window.gtag) { try { gtag('event', 'generate_lead'); } catch (e) {} }
         })
         .catch(function () {
           msg.className = 'form-msg err';
           var mail = f.getAttribute('data-mailto');
-          msg.innerHTML = '这次没发出去（可能是网络或拦截插件）。可以直接 <a href="' + mail + '">发邮件给我们</a>，把刚才写的内容贴进去就行。';
+          msg.innerHTML = '发送未成功（可能是网络或浏览器插件拦截）。请改用 <a href="' + mail + '">电子邮件</a>，将上述内容粘贴发送。';
         })
         .then(function () { btn.disabled = false; btn.textContent = old; });
     });
