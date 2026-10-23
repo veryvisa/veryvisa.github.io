@@ -1,5 +1,13 @@
 /* 微出国服务站 · 咨询表单（FormSubmit AJAX）。无依赖；失败时露出 mailto 兜底。 */
 (function () {
+  // 旧链接兼容：迁移前指向站首页的锚点转到现行子页（映射由 build.py 按 site.json legacy_fragments 写入）
+  var legacyEl = document.getElementById('legacy-fragments');
+  if (legacyEl && location.hash) {
+    try {
+      var to = JSON.parse(legacyEl.textContent)[decodeURIComponent(location.hash.slice(1))];
+      if (to && !document.getElementById(decodeURIComponent(location.hash.slice(1)))) { location.replace(to); return; }
+    } catch (e) {}
+  }
   var bar = document.querySelector('.mobile-service-bar');
   var hero = document.querySelector('.hero');
   var contact = document.querySelector('#contact');
